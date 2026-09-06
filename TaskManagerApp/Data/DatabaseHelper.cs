@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
+using System.Collections.Generic;
+using TaskManagerApp.Models;
 
 namespace TaskManagerApp.Data
 {
@@ -33,6 +35,44 @@ namespace TaskManagerApp.Data
             command.ExecuteNonQuery();
 
 
+        }
+        public void AddTask(string title, string description)
+        {
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+
+            var command = connection.CreateCommand();
+            command.CommandText = @"
+        INSERT INTO Tasks (Title, Description, IsCompleted, DateCreated)
+        VALUES ($title, $description, 0, $dateCreated);
+    ";
+            command.Parameters.AddWithValue("$title", title);
+            command.Parameters.AddWithValue("$description", description);
+            command.Parameters.AddWithValue("$dateCreated", DateTime.Now.ToString("s"));
+            command.ExecuteNonQuery();
+        }
+
+        public List <TaskItem> GetAllTasks()
+        {
+            var tasks = new List <TaskItem>();
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT Id, Title, Description, IsCompleted, DateCreated FROM Tasks;";
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var task = new TaskItem
+                {
+                    Id = reader.GetInt32(0),
+                    Title = reader.GetString(1),
+                    Description = reader.GetString(2),
+                    IsCompleted = reader.GetInt32(3) == 1,
+                    DataCreare = DateTime.Parse(reader.GetString(4))
+                };
+                tasks.Add(task);
+            }
+            return tasks;
         }
     }
 }

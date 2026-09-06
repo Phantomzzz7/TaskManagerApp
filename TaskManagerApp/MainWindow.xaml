@@ -11,6 +11,6 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Content="Apasa" Width="100" Height="30" Click="Button_Click" Grid.ColumnSpan="2" Margin="350,202,350,202"/>
+        <Button Content="Apasa" Width="100" Height="30" Click="Button_Click" Grid.ColumnSpan="2" Margin="350,187,350,217"/>
     </Grid>
 </Window>

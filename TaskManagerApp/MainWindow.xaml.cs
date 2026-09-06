@@ -11,15 +11,21 @@ using System.Windows.Shapes;
 
 namespace TaskManagerApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
             var db = new TaskManagerApp.Data.DatabaseHelper();
+            var tasks = db.GetAllTasks();
+
+            string mesaj = "";
+            foreach (var task in tasks)
+            {
+                mesaj += $"- {task.Title} (Completed: {task.IsCompleted})\n";
+            }
+
+            MessageBox.Show(mesaj);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
