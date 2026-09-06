@@ -74,5 +74,19 @@ namespace TaskManagerApp.Data
             }
             return tasks;
         }
+        public void UpdateTaskStatus(int id, bool isCompleted)
+        {
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = @"
+        UPDATE Tasks
+        SET IsCompleted = $isCompleted
+        WHERE Id = $id;
+    ";
+            command.Parameters.AddWithValue("$isCompleted", isCompleted ? 1 : 0);
+            command.Parameters.AddWithValue("$id", id);
+            command.ExecuteNonQuery();
+        }
     }
 }

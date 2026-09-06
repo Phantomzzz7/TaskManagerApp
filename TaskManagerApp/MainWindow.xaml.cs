@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using TaskManagerApp.Data;
+using TaskManagerApp.Models;
 
 namespace TaskManagerApp
 {
@@ -16,14 +18,8 @@ namespace TaskManagerApp
 
         private void LoadTasks()
         {
-            TasksListBox.Items.Clear();
-
             var tasks = db.GetAllTasks();
-            foreach (var task in tasks)
-            {
-                string status = task.IsCompleted ? "[x]" : "[ ]";
-                TasksListBox.Items.Add($"{status} {task.Title}");
-            }
+            TasksListBox.ItemsSource = tasks;
         }
 
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)
@@ -39,6 +35,14 @@ namespace TaskManagerApp
             db.AddTask(title, "");
             TitleTextBox.Clear();
             LoadTasks();
+        }
+
+        private void TaskCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            var task = (TaskItem)checkBox.DataContext;
+
+            db.UpdateTaskStatus(task.Id, task.IsCompleted);
         }
     }
 }

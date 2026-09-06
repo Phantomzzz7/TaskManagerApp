@@ -19,7 +19,16 @@
                 <Button x:Name="AddTaskButton" Content="Add Task" Width="100" Height="30" Margin="10,0,0,0" Click="AddTaskButton_Click"/>
             </StackPanel>
             <TextBlock Grid.Row="1" Text="Tasks:" FontWeight="Bold" Margin="0,0,0,5"/>
-            <ListBox x:Name="TasksListBox" Grid.Row="2"/>
+            <ListBox x:Name="TasksListBox" Grid.Row="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Title}"
+                      IsChecked="{Binding IsCompleted, Mode=TwoWay}"
+                      Checked="TaskCheckBox_Changed"
+                      Unchecked="TaskCheckBox_Changed"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
 </Window>
