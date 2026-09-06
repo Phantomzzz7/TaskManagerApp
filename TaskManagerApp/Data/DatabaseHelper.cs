@@ -68,7 +68,7 @@ namespace TaskManagerApp.Data
                     Title = reader.GetString(1),
                     Description = reader.GetString(2),
                     IsCompleted = reader.GetInt32(3) == 1,
-                    DataCreare = DateTime.Parse(reader.GetString(4))
+                    DataCreated = DateTime.Parse(reader.GetString(4))
                 };
                 tasks.Add(task);
             }

@@ -13,7 +13,7 @@ namespace TaskManagerApp.Models
 
         public bool IsCompleted { get; set; }
 
-        public DateTime DataCreare { get; set; }
+        public DateTime DataCreated { get; set; }
 
     }
 }

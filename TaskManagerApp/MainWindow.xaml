@@ -7,10 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Button Content="Apasa" Width="100" Height="30" Click="Button_Click" Grid.ColumnSpan="2" Margin="350,187,350,217"/>
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox x:Name="TitleTextBox" Width="250" Height="30" VerticalContentAlignment="Center"/>
+                <Button x:Name="AddTaskButton" Content="Add Task" Width="100" Height="30" Margin="10,0,0,0" Click="AddTaskButton_Click"/>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Text="Tasks:" FontWeight="Bold" Margin="0,0,0,5"/>
+            <ListBox x:Name="TasksListBox" Grid.Row="2"/>
+        </Grid>
     </Grid>
 </Window>

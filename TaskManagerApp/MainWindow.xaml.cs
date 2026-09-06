@@ -1,36 +1,44 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using TaskManagerApp.Data;
 
 namespace TaskManagerApp
 {
     public partial class MainWindow : Window
     {
+        private readonly DatabaseHelper db;
+
         public MainWindow()
         {
             InitializeComponent();
-            var db = new TaskManagerApp.Data.DatabaseHelper();
-            var tasks = db.GetAllTasks();
-
-            string mesaj = "";
-            foreach (var task in tasks)
-            {
-                mesaj += $"- {task.Title} (Completed: {task.IsCompleted})\n";
-            }
-
-            MessageBox.Show(mesaj);
+            db = new DatabaseHelper();
+            LoadTasks();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LoadTasks()
         {
-              MessageBox.Show("Button clicked!");
+            TasksListBox.Items.Clear();
+
+            var tasks = db.GetAllTasks();
+            foreach (var task in tasks)
+            {
+                string status = task.IsCompleted ? "[x]" : "[ ]";
+                TasksListBox.Items.Add($"{status} {task.Title}");
+            }
+        }
+
+        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            string title = TitleTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                MessageBox.Show("Please enter a task title.");
+                return;
+            }
+
+            db.AddTask(title, "");
+            TitleTextBox.Clear();
+            LoadTasks();
         }
     }
 }
