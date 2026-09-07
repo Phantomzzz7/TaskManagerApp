@@ -23,9 +23,9 @@ A simple desktop task manager built with C# (WPF) and SQLite, allowing users to 
 
 ## Screenshot
 
-![Task list with checkboxes and delete buttons](Screenshot1.png)
+![Task list with checkboxes and delete buttons](TaskManagerApp/Screenshot1.png)
 
-![Task list after deleting a task](Screenshot2.png)
+![Task list after deleting a task](TaskManagerApp/Screenshot2.png)
 
 ## How to Run
 
