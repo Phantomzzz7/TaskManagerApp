@@ -44,5 +44,13 @@ namespace TaskManagerApp
 
             db.UpdateTaskStatus(task.Id, task.IsCompleted);
         }
+        private void DeleteTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            int taskId = (int)button.Tag;
+
+            db.DeleteTask(taskId);
+            LoadTasks();
+        }
     }
 }

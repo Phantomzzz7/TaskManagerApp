@@ -88,5 +88,14 @@ namespace TaskManagerApp.Data
             command.Parameters.AddWithValue("$id", id);
             command.ExecuteNonQuery();
         }
+        public void DeleteTask(int id)
+        {
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM Tasks WHERE Id = $id;";
+            command.Parameters.AddWithValue("$id", id);
+            command.ExecuteNonQuery();
+        }
     }
 }
